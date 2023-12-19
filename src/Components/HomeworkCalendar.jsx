@@ -8,7 +8,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 
 import { useNavigate } from 'react-router-dom';
 
-const Profile = () => {
+const HomeworkCalendar = () => {
   const modalRef = useRef(null);
   const navigate = useNavigate();
 
@@ -18,7 +18,8 @@ const Profile = () => {
     // modal.style.display = 'block';
     // const modalBody = modal.querySelector('.modal-body');
     // modalBody.innerHTML = `<h3>${arg.dateStr}</h3>`;
-    navigate('/dashboard/homework');
+    const selectedDate = arg.dateStr;
+    navigate(`/dashboard/homework/${selectedDate}`);
   };
 
   // const handleCloseModal = () => {
@@ -33,15 +34,12 @@ const Profile = () => {
         <h3></h3>
       </div>
 
-      <div className="container">
+      <div className="container" style={{ height: 'auto' }}>
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin]}
           dateClick={handleDateClick}
           initialView="dayGridMonth"
-          events={[
-            { title: 'event 1', date: '2020-11-01' },
-            { title: 'event 2', date: '2020-11-02' }
-          ]}
+          height="auto"
         />
       </div>
 
@@ -68,4 +66,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default HomeworkCalendar;

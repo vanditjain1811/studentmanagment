@@ -5,13 +5,14 @@ import {BrowserRouter, Routes, Route, useNavigate} from 'react-router-dom'
 import Dashboard from './Components/Dashboard'
 
 
-import Profile from './Components/Profile'
+
 
 
 import Student from './Components/Student'
 import AddStudent from './Components/AddStudent'
 import Homework from './Components/Homework'
 import AddHomework from './Components/AddHomework'
+import HomeworkCalendar from './Components/HomeworkCalendar'
 
 
 
@@ -28,8 +29,8 @@ function App() {
         {/* <Route path='' element={<Home />}></Route> */}
         <Route path='/dashboard/student' element={<Student />}></Route>
        
-        <Route path='/dashboard/profile' element={<Profile />}></Route>
-        <Route path='/dashboard/homework' element={<Homework />}></Route>
+        <Route path='/dashboard/homeworkcalendar' element={<HomeworkCalendar />}></Route>
+        <Route path='/dashboard/homework/:selectedDate' element={<Homework />}></Route>
         
         <Route path='/dashboard/add_student' element={<AddStudent />}></Route>
         <Route path='/dashboard/add_homework' element={<AddHomework />}></Route>

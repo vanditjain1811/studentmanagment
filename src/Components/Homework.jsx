@@ -3,9 +3,10 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useParams } from 'react-router-dom';
 const Homework = () => {
 
-    
+    const { selectedDate } = useParams();
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
@@ -37,7 +38,7 @@ const Homework = () => {
     <div>
 <div className="px-5 mt-3">
             <div className="d-flex justify-content-center">
-                <h3>Homework</h3>
+                <h3>Homework for {selectedDate} </h3>
             </div>
             <Link to="/dashboard/add_homework" className="btn btn-success mb-3">
                 Add Homework
