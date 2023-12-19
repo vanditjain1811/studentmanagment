@@ -3,8 +3,9 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import axios from "axios";
 import { Link } from "react-router-dom";
+const Homework = () => {
 
-const Student = () => {
+    
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
@@ -32,13 +33,14 @@ const Student = () => {
         }
     }, []);
 
-    return (
-        <div className="px-5 mt-3">
+  return (
+    <div>
+<div className="px-5 mt-3">
             <div className="d-flex justify-content-center">
-                <h3>Student List</h3>
+                <h3>Homework</h3>
             </div>
-            <Link to="/dashboard/add_student" className="btn btn-success">
-                Add Student
+            <Link to="/dashboard/add_homework" className="btn btn-success mb-3">
+                Add Homework
             </Link>
             <DataTable
                 value={posts}
@@ -52,13 +54,14 @@ const Student = () => {
                 stripedRows
                 tableStyle={{ minWidth: '50rem' }}
             >
-                <Column field="name" sortable header="Name"></Column>
-                <Column field="mobile" sortable header="Mobile"></Column>
-                <Column field="address" sortable header="Address"></Column>
-                <Column field="code" sortable header="Code"></Column>
+                <Column field="name" sortable header="Class"></Column>
+                <Column field="mobile" sortable header="Subject"></Column>
+                <Column field="address" sortable header="Homework"></Column>
+                
             </DataTable>
         </div>
-    );
-};
+</div>
+  )
+}
 
-export default Student;
+export default Homework
