@@ -17,7 +17,7 @@ const Login = () => {
         event.preventDefault();
 
         axios
-            .post('https://lokapati.born4tech.com/api/login', JSON.stringify(values), {
+            .post('https://erp.studymadness.com/api/login', JSON.stringify(values), {
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
