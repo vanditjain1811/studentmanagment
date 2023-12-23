@@ -98,8 +98,8 @@ const AddHomework = () => {
     const date = new URLSearchParams(location.search).get("date");
     
     const postData = {
-      classId: selectedClass,
-      subjectId: selectedSubject,
+      classid: selectedClass,
+      subjectid: selectedSubject,
       date: date,
       homework: homework,
     };
@@ -114,6 +114,7 @@ console.log(postData);
           },
           withCredentials: true,
         });
+        console.log("post success")
         navigate('/dashboard/homeworkcalendar');
       } catch (error) {
         console.error('Error adding homework:', error);

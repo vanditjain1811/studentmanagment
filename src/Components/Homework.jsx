@@ -35,7 +35,7 @@ const Homework = () => {
             // Handle the case where the token is not available (user is not logged in)
             console.error("Token not found. User is not logged in.");
         }
-    }, );
+    }, []);
 
   return (
     <div>
@@ -59,8 +59,9 @@ const Homework = () => {
                 tableStyle={{ minWidth: '50rem' }}
             >
             
-                <Column field="homework" sortable header="Homework"></Column>
-                
+            <Column field="class_name" sortable header="Class"></Column>
+            <Column field="subject_name" sortable header="Subject"></Column>
+            
             </DataTable>
         </div>
 </div>
