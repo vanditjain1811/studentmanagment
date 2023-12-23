@@ -16,14 +16,17 @@ const Homework = () => {
         // Check if the token is available
         if (token) {
             axios
-                .get("https://lokapati.born4tech.com/api/student", {
+                .get(`https://erp.studymadness.com/api/homework/${selectedDate}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
                     },
                     withCredentials: true, // Include credentials in the request
                 })
-                .then((res) => setPosts(res.data))
+                .then((res) =>{ 
+                setPosts(res.data.homework);
+                console.log(res.data);
+            })
                 .catch((error) => {
                     // Handle error
                     console.error("Error fetching data:", error.response ? error.response.data : error.message);
@@ -32,7 +35,7 @@ const Homework = () => {
             // Handle the case where the token is not available (user is not logged in)
             console.error("Token not found. User is not logged in.");
         }
-    }, []);
+    }, );
 
   return (
     <div>
@@ -40,7 +43,7 @@ const Homework = () => {
             <div className="d-flex justify-content-center">
                 <h3>Homework for {selectedDate} </h3>
             </div>
-            <Link to="/dashboard/add_homework" className="btn btn-success mb-3">
+            <Link to={`/dashboard/add_homework?date=${selectedDate}`} className="btn btn-success mb-3">
                 Add Homework
             </Link>
             <DataTable
@@ -55,9 +58,8 @@ const Homework = () => {
                 stripedRows
                 tableStyle={{ minWidth: '50rem' }}
             >
-                <Column field="name" sortable header="Class"></Column>
-                <Column field="mobile" sortable header="Subject"></Column>
-                <Column field="address" sortable header="Homework"></Column>
+            
+                <Column field="homework" sortable header="Homework"></Column>
                 
             </DataTable>
         </div>
