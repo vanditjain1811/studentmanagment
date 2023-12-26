@@ -65,6 +65,20 @@ const EditHomework = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    const parser = new DOMParser();
+  const parsedHomework = parser.parseFromString(homework, 'text/html').body.textContent;
+
+
+  if (!parsedHomework.trim()) {
+     
+      Swal.fire({
+        title: "Error!",
+        text: "Homework field cannot be empty.",
+        icon: "error",
+      });
+      return;
+    }
+
     const postData = {
       homework: homework,
     };

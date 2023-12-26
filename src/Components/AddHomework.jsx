@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 const customStyles = `
 .ql-placeholder{
@@ -95,6 +97,34 @@ const AddHomework = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+
+    if (!selectedClass || !selectedSubject) {
+      Swal.fire({
+        title: "Error!",
+        text: "Please select both class and subject.",
+        icon: "error",
+      });
+      return;
+    }
+
+
+    const parser = new DOMParser();
+    const parsedHomework = parser.parseFromString(homework, 'text/html').body.textContent;
+  
+  
+    if (!parsedHomework.trim()) {
+       
+        Swal.fire({
+          title: "Error!",
+          text: "Homework field cannot be empty.",
+          icon: "error",
+        });
+        return;
+      }
+  
+
+
     const date = new URLSearchParams(location.search).get("date");
     
     const postData = {
@@ -116,6 +146,11 @@ console.log(postData);
         });
         console.log("post success")
         navigate(`/dashboard/homework/${date}`);
+        Swal.fire({
+          title: "Added!",
+          text: "Your Homework has been added.",
+          icon: "success"
+        });
       } catch (error) {
         console.error('Error adding homework:', error);
       }
