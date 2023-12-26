@@ -115,7 +115,7 @@ console.log(postData);
           withCredentials: true,
         });
         console.log("post success")
-        navigate('/dashboard/homeworkcalendar');
+        navigate(`/dashboard/homework/${date}`);
       } catch (error) {
         console.error('Error adding homework:', error);
       }
