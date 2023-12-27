@@ -21,10 +21,13 @@ const EditStudent = () => {
     dateOfAdmission: "",
     year: "",
     class: "",
+    section:"",
+    rollno:"",
   });
 
   const [sessions, setSessions] = useState([]);
   const [classes, setClasses] = useState([]);
+  const [section, setSection] = useState([]);
 
 
   useEffect(() => {
@@ -56,6 +59,8 @@ const EditStudent = () => {
             dateOfAdmission: studentData.join_date,
             year: studentData.asignstudent[0].year_id,
             class: studentData.asignstudent[0].class_id,
+            section: studentData.asignstudent[0].shift_id,
+            rollno:studentData.asignstudent[0].roll,
            
           });
           console.log(response.data.students);
@@ -94,6 +99,20 @@ const EditStudent = () => {
         .catch((error) => {
           console.error("Error fetching classes:", error);
         });
+        axios
+        .get("https://erp.studymadness.com/api/section", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          withCredentials: true,
+        })
+        .then((response) => {
+          setSection(response.data.section.allData);
+        })
+        .catch((error) => {
+          console.error("Error fetching classes:", error);
+        }); 
     } else {
       console.error("Token not found. User is not logged in.");
       // Handle the case where the token is not available (user is not logged in)
@@ -104,7 +123,7 @@ const EditStudent = () => {
   }, []);
    // Dependency on studentId ensures that this effect runs when the studentId changes
 
-   console.log(formData.year);
+   
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -186,6 +205,16 @@ const EditStudent = () => {
           />
         </div>
         <div className="col-md-4">
+          <label className="form-label">Roll No.</label>
+          <input
+            type="text"
+            className="form-control"
+            name="rollno"
+            value={formData.rollno}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="col-md-4">
           <label className="form-label">Date of Birth (DOB)</label>
           <input
             type="date"
@@ -247,6 +276,7 @@ const EditStudent = () => {
               ))}
             </select>
           </div>
+
           <div className="col-md-4">
             <label className="form-label">Class</label>
             <select
@@ -263,6 +293,24 @@ const EditStudent = () => {
               ))}
             </select>
           </div>
+
+          <div className="col-md-4">
+            <label className="form-label">Section</label>
+            <select
+              className="form-control"
+              name="section"
+              
+              onChange={handleChange}
+            >
+              <option value="">Select Section</option>
+              {section.map((sec) => (
+                <option key={sec.id} value={sec.id} selected={sec.id===formData.section} >
+                  {sec.name}
+                </option>
+              ))}
+            </select>
+          </div>     
+
           <div className="col-12 text-center mt-5">
             <button type="submit" className="mt-1 btn btn-primary btn-md">
               Update
