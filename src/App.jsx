@@ -14,6 +14,7 @@ import Homework from './Components/Homework'
 import AddHomework from './Components/AddHomework'
 import HomeworkCalendar from './Components/HomeworkCalendar'
 import EditHomework from './EditHomework'
+import EditStudent from './Components/EditStudent'
 
 
 
@@ -33,6 +34,7 @@ function App() {
         <Route path='/dashboard/homeworkcalendar' element={<HomeworkCalendar />}></Route>
         <Route path='/dashboard/homework/:selectedDate' element={<Homework />}></Route>
         <Route path='/dashboard/edit_homework/:homeworkId' element={<EditHomework />}></Route>
+        <Route path='/dashboard/edit_student/:studentId' element={<EditStudent />}></Route>
        
         
         <Route path='/dashboard/add_student' element={<AddStudent />}></Route>

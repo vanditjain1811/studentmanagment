@@ -7,15 +7,16 @@ import { InputText } from 'primereact/inputtext';
 
 const Student = () => {
     const [posts, setPosts] = useState([]);
-    const [globalFilter, setGlobalFilter] = useState(null);
+    const [globalFilter, setGlobalFilter] = useState('');
     const header = (
         <div style={{ textAlign: 'left' }}>
           <i className="pi pi-search" style={{ margin: '4px 4px 0 0' }} />
           <InputText
-            type="search"
-            onInput={(e) => setGlobalFilter(e.target.value)}
-            placeholder="Global Search"
-            size="30"
+           type="search"
+           value={globalFilter}
+           onChange={(e) => setGlobalFilter(e.target.value)}
+           placeholder="Global Search"
+           size="30"
           />
         </div>
       );
@@ -27,14 +28,17 @@ const Student = () => {
         // Check if the token is available
         if (token) {
             axios
-                .get("https://lokapati.born4tech.com/api/students", {
+                .get("https://erp.studymadness.com/api/student/", {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json',
                     },
                     withCredentials: true, // Include credentials in the request
                 })
-                .then((res) => setPosts(res.data))
+                .then((res) => {
+                    setPosts(res.data.students);
+                    console.log(res.data);
+                })
                 .catch((error) => {
                     // Handle error
                     console.error("Error fetching data:", error.response ? error.response.data : error.message);
@@ -45,7 +49,27 @@ const Student = () => {
         }
     }, []);
 
-   
+    const editTemplate = (rowData) => {
+        return (
+            <div className="d-flex ">
+         <div className="mr-5">
+                <Link to={`/dashboard/edit_student/${rowData.id}`} className="btn btn-warning">
+                    Edit
+                </Link>
+                
+            </div>
+            <div className="mx-3">
+                <button className="btn btn-danger  " onClick={() => handleDelete(rowData.id)}>
+                    Delete
+                </button>
+                
+            </div>
+            </div>
+        );
+    };
+  
+
+
     return (
         <div className="px-5 mt-3">
             <div className="d-flex justify-content-center">
@@ -54,6 +78,7 @@ const Student = () => {
             <Link to="/dashboard/add_student" className="mb-3 btn btn-success">
                 Add Student
             </Link>
+           
             <DataTable
                 value={posts}
                 paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
@@ -64,6 +89,7 @@ const Student = () => {
                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} posts"
                 rows={10}
                 stripedRows
+                rowSelection
                 tableStyle={{ minWidth: '50rem' }}
                 globalFilter={globalFilter}
                 header={header}
@@ -72,7 +98,9 @@ const Student = () => {
                 <Column field="mobile" sortable header="Mobile"></Column>
                 <Column field="address" sortable header="Address"></Column>
                 <Column field="code" sortable header="Code"></Column>
+                <Column body={editTemplate} header="Action"></Column>
             </DataTable>
+          
         </div>
     );
 };
